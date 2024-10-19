@@ -1,3 +1,6 @@
 # pip install -r requirements.txt
 
 tensorflow
+opencv-python
+matplotlib
+effdet
