@@ -39,3 +39,6 @@ def instalar_dependencias(ruta_requerimientos):
             print(resultado.stderr)
     else:
         print("Todas las dependencias ya están instaladas.")
+
+ruta_requerimientos = "requirements.txt"
+instalar_dependencias(ruta_requerimientos)
