@@ -1,4 +1,5 @@
 tensorflow
+torch
 opencv-python
 matplotlib
 numpy
