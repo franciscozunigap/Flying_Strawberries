@@ -1,37 +1,32 @@
-import tensorflow as tf
 import os
+import cv2
+from ultralytics import YOLO
 
-# NO FUNCIONA
-def load_efficientdet_model():
-    model_path = os.path.join(os.getcwd(), "models", "efficientdet-d0")
-    model = tf.saved_model.load(model_path)  # Ruta al modelo
+def load_model(model_path=os.path.join(os.getcwd(), "runs/detect/train/weights/best.pt")):
+    model = YOLO(model_path)
     return model
 
-# NO FUNCIONA
-def detect_fruit(img_preprocesada, modelo_deteccion, umbral=0.3):
-    # Realizar la detección
-    detecciones = modelo_deteccion(img_preprocesada)
+# Función para detectar frutillas en todas las imágenes de un directorio
+def detect_strawberries(model, input_images_dir):
+    # Extensiones de imagen comunes
+    valid_extensions = (".png", ".jpg", ".jpeg")
 
-    # Obtener las cajas, puntuaciones y clases de las detecciones
-    boxes = detecciones['detection_boxes'][0].numpy()
-    scores = detecciones['detection_scores'][0].numpy()
-    classes = detecciones['detection_classes'][0].numpy().astype(int)
-    print("Boxes:", boxes)
-    print("Scores:", scores)
-    print("Classes:", classes)
+    # Obtener todas las imágenes con extensiones válidas en el directorio de entrada
+    image_files = [f for f in os.listdir(input_images_dir) if f.lower().endswith(valid_extensions)]
 
+    results_list = []  # Lista para almacenar los resultados
 
-    # Filtrar detecciones según el umbral
-    detecciones_filtradas = []
-    for i in range(len(scores)):
-        if scores[i] >= umbral:  # Solo mantener detecciones con alta puntuación
-            deteccion = {
-                'caja': boxes[i],
-                'puntuacion': scores[i],
-                'clase': classes[i]
-            }
-            detecciones_filtradas.append(deteccion)
+    # Realizar inferencia en cada imagen
+    for image_file in image_files:
+        image_path = os.path.join(input_images_dir, image_file)  # Ruta completa de la imagen
+        original_image = cv2.imread(image_path)  # Leer la imagen original con OpenCV (formato BGR)
 
-    return detecciones_filtradas
+        # Realizar inferencia con el modelo
+        results = model(image_path)
 
+        # Guardar los resultados y las imágenes
+        for result in results:
+            detected_image = result.plot()  # Obtener la imagen con detecciones
+            results_list.append((original_image, detected_image, image_file))  # Guardar original y detección
 
+    return results_list  # Devolver lista de tuplas (imagen original, imagen detectada, nombre archivo)

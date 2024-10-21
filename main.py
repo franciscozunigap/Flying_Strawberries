@@ -1,27 +1,21 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Solo errores
-from modules.img_preprocessing import load_image, preprocess_image
-from modules.visualization import draw_detections, display_image
-from modules.detection import load_efficientdet_model, detect_fruit
+from modules.detection import load_model, detect_strawberries
+from modules.utils import display_results, save_predicts
 
-# Cargar las imágenes
-img_carpeta = "img"
-img_archivos = os.listdir(img_carpeta)
+# Cargar los directorios de imágenes
+proyect_dir = os.getcwd()
+input_images_dir = os.path.join(proyect_dir, "img/input_predict")
+output_predict_dir = os.path.join(proyect_dir, "img/output_predict")
 
 # Cargar el modelo de detección
-modelo_deteccion = load_efficientdet_model()
+modelo_deteccion = load_model()
 
-for img_archivo in img_archivos:
-    img_ruta = os.path.join(img_carpeta, img_archivo)
+# Detectar las frutillas
+resultados = detect_strawberries(modelo_deteccion, input_images_dir)
+print(f"Se procesaron {len(resultados)} imágenes.")
 
-    # Cargar y preprocesar la imagen
-    img = load_image(img_ruta)
-    img_preprocesada = preprocess_image(img)
+# Visualizar las imágenes
+display_results(resultados)
 
-    # Detectar las frutillas
-    detecciones = detect_fruit(img_preprocesada, modelo_deteccion)
-    print(f"Número de detecciones: {len(detecciones)}")
-
-    # Visualizar los resultados
-    img_con_detecciones = draw_detections(img, detecciones)
-    display_image(img_con_detecciones)
+# Guardar las imágenes
+save_predicts(resultados, output_predict_dir)
