@@ -11,4 +11,4 @@ data_path = os.path.join(dataset_dir, "datasets/dataset.yaml")
 model = YOLO(model_path)
 
 # Entrenar el modelo
-results = model.train(data=data_path, epochs=50, imgsz=640, augment=True)
+results = model.train(data=data_path, epochs=25, imgsz=640, augment=True)

@@ -37,8 +37,8 @@ dataset_dir = os.getcwd()
 splits = ['train', 'val', 'test']
 
 for split in splits:
-    image_dir = os.path.join(dataset_dir, "dataset", split, "images")
-    label_dir = os.path.join(dataset_dir, "dataset", split, "labels")
+    image_dir = os.path.join(dataset_dir, "datasets", split, "images")
+    label_dir = os.path.join(dataset_dir, "datasets", split, "labels")
 
     # Crear las carpetas de salida si no existen
     os.makedirs(label_dir, exist_ok=True)

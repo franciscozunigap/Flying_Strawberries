@@ -4,7 +4,7 @@ model: C:\Users\franc\Documents\ingenieria civil telematica\procesamiento digita
   de imagenes\Flying_Strawberries\datasets/yolo11n.pt
 data: C:\Users\franc\Documents\ingenieria civil telematica\procesamiento digital de
   imagenes\Flying_Strawberries\datasets/dataset.yaml
-epochs: 20
+epochs: 25
 time: null
 patience: 100
 batch: 16
@@ -49,7 +49,7 @@ source: null
 vid_stride: 1
 stream_buffer: false
 visualize: false
-augment: false
+augment: true
 agnostic_nms: false
 classes: null
 retina_masks: false
