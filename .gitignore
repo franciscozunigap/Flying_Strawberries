@@ -4,3 +4,4 @@ datasets/
 output_predict/
 flying_strawberries.zip
 yolo11n.pt
+train/
