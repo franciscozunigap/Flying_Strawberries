@@ -4,8 +4,8 @@ from modules.utils import display_results, save_predicts
 
 # Cargar los directorios de imágenes
 proyect_dir = os.getcwd()
-input_images_dir = os.path.join(proyect_dir, "img/input_predict")
-output_predict_dir = os.path.join(proyect_dir, "img/output_predict")
+input_images_dir = os.path.join(proyect_dir, "img/input")
+output_predict_dir = os.path.join(proyect_dir, "img/output")
 
 # Cargar el modelo de detección
 modelo_deteccion = load_model()

@@ -1,14 +1,7 @@
-import os
-from ultralytics import YOLO
+from ultralytics import YOLO, checks, hub
+checks()
 
-dataset_dir = os.getcwd()
+hub.login('fbf921bfc039bf0941a80291c3ecea5218b6dee2d3')
 
-# Crea las rutas completas a los archivos de modelo y conjunto de datos
-model_path = os.path.join(dataset_dir, "datasets/yolo11n.pt")
-data_path = os.path.join(dataset_dir, "datasets/dataset.yaml")
-
-# Cargar el modelo
-model = YOLO(model_path)
-
-# Entrenar el modelo
-results = model.train(data=data_path, epochs=25, imgsz=640, augment=True)
+model = YOLO('https://hub.ultralytics.com/models/74nqjy40zrKrUPnxNiQF')
+results = model.train()

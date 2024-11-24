@@ -1,17 +1,15 @@
 task: detect
 mode: train
-model: C:\Users\franc\Documents\ingenieria civil telematica\procesamiento digital
-  de imagenes\Flying_Strawberries\datasets/yolo11n.pt
-data: C:\Users\franc\Documents\ingenieria civil telematica\procesamiento digital de
-  imagenes\Flying_Strawberries\datasets/dataset.yaml
-epochs: 25
+model: yolo11n.pt
+data: https://storage.googleapis.com/ultralytics-hub.appspot.com/users/3yDrL2mYipQ8uyU9SyN0yUzHHfl2/datasets/k2rpe0fKrtCjdG9SYWDo/flying_strawberries.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-jsjt9%40ultralytics-hub.iam.gserviceaccount.com%2F20241124%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241124T014000Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=046bf857bf1ed53b30fd5e1e3a2ebb0eb316a1cee73ee568e1ca7a88bdaa6e02a4aa746eb8fd88f3afab137c794121ace89ea29738aeae3ecb8748d051be706ae47290800724529db75cae3aa5bf9b169a029f391c14744f028f23a8fded7759df4dbd0f54dc39c7a251b09897f69e4a77ab5e567e63c102acf43f134c48006b6363e8b8c5f71c50e4addb51ef0f5ab0d89bb72b0eaf2dba679a33b2e1c52c029fd5a0ca5ddfa354628d8270d51ae4b3e2f5309f7cd83e9f845b1ae3793a0340b52d7761d2a9542083a30da687035548beb4f1a6a8f003410e11ec561330b0b79b274e14207e1aae744e8e7f52a0e32af4e612549647bb4cb346a4aaf32eaa5c
+epochs: 100
 time: null
 patience: 100
-batch: 16
+batch: -1
 imgsz: 640
 save: true
 save_period: -1
-cache: false
+cache: null
 device: null
 workers: 8
 project: null
@@ -49,7 +47,7 @@ source: null
 vid_stride: 1
 stream_buffer: false
 visualize: false
-augment: true
+augment: false
 agnostic_nms: false
 classes: null
 retina_masks: false
