@@ -65,7 +65,7 @@ def inference(image_path, detect_model, classify_model):
         ax.add_patch(rect)
 
         # Añadir el texto de la clase y el porcentaje de acierto
-        plt.text(x1, y1 - 10, f'{name}, {percent_number*100:.1f}%', color=color, fontsize=6, weight='bold')
+        plt.text(x1, y1 - 10, f'{name} {percent_number*100:.1f}%', color=color, fontsize=6, weight='bold')
 
     # Mostrar la imagen con las cajas delimitadoras
     plt.axis("off")
