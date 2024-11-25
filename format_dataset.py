@@ -1,6 +1,5 @@
 import os
 import cv2
-import numpy as np
 
 # Función para encontrar bounding boxes en las imágenes de etiquetas
 def find_bounding_boxes(label_img):

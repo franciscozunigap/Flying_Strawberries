@@ -1,21 +1,11 @@
-import os
-from modules.detection import load_detect_model, detect_strawberries
-from modules.utils import display_results, save_predicts
+from modules.models import load_detect_model, load_classify_model
+from modules.algoritm import inference
 
-# Cargar los directorios de imágenes
-proyect_dir = os.getcwd()
-input_images_dir = os.path.join(proyect_dir, "img/input")
-output_predict_dir = os.path.join(proyect_dir, "img/output")
+# Cargar los modelos
+detect_model = load_detect_model()
+classify_model = load_classify_model()
 
-# Cargar el modelo de detección
-modelo_deteccion = load_detect_model()
+# Ruta de la imagen a procesar
+image_path = "img/input/R.png"
 
-# Detectar las frutillas
-resultados = detect_strawberries(modelo_deteccion, input_images_dir)
-print(f"Se procesaron {len(resultados)} imágenes.")
-
-# Visualizar las imágenes
-display_results(resultados)
-
-# Guardar las imágenes
-save_predicts(resultados, output_predict_dir)
+inference(image_path, detect_model, classify_model)
