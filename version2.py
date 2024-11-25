@@ -1,12 +1,9 @@
 from modules.detection import load_model
 import cv2
-import matplotlib.pyplot as plt
 import os
+from ultralytics import YOLO
 
 def extract_bounding_boxes(image_path, model):
-    # Cargar la imagen
-    image = cv2.imread(image_path)
-
     # Obtener las detecciones
     results = model(image_path)  # Realiza las detecciones
 
@@ -26,32 +23,40 @@ def extract_bounding_boxes(image_path, model):
     # Retornar las coordenadas de las bounding boxes
     return bounding_boxes
 
-def save_strawberry_roi(image_path, bounding_box, output_dir, output_name):
-    # Cargar la imagen original
-    image = cv2.imread(image_path)
-
-    # Extraer las coordenadas de la bounding box y asegurarse de que sean enteros
-    x1, y1, x2, y2 = map(int, bounding_box)  # Convertir las coordenadas a enteros
-
-    # Recortar la región de la frutilla (ROI)
-    roi = image[y1:y2, x1:x2]
-
+def save_bounding_boxes_as_images(image, bounding_boxes, output_dir):
     # Crear el directorio de salida si no existe
     os.makedirs(output_dir, exist_ok=True)
 
-    # Ruta completa del archivo de salida
-    output_path = os.path.join(output_dir, output_name)
+    # Iterar sobre las bounding boxes y guardar las imágenes correspondientes
+    for idx, box in enumerate(bounding_boxes):
+        x1, y1, x2, y2 = map(int, box)  # Convertir las coordenadas a enteros
 
-    # Guardar la imagen recortada
-    cv2.imwrite(output_path, roi)
+        # Recortar la región de interés (ROI) de la imagen
+        roi = image[y1:y2, x1:x2]
 
-    print(f"Imagen recortada guardada en: {output_path}")
+        # Ruta completa para guardar la imagen de la bounding box
+        output_path = os.path.join(output_dir, f"strawberry_{idx + 1}.png")
 
-model = load_model()
+        # Guardar la imagen recortada
+        cv2.imwrite(output_path, roi)
 
-boxes = extract_bounding_boxes("datasets/flying_strawberries/train/images/1.png", model)
-for i, box in enumerate(boxes):
-    save_strawberry_roi("datasets/flying_strawberries/train/images/1.png", box, "train/madura", f"{i}.png")
+        print(f"Imagen recortada guardada en: {output_path}")
 
+def classify_image_with_yolo(image_path, model):
+    # Realizar la inferencia
+    results = model(image_path)
 
+    return results[0].probs.top1
 
+# Cargar el modelo
+model = load_model()  # Modelo YOLO cargado
+
+# Ruta de la imagen a procesar
+image_path = "img/input/R.png"  # Especifica tu imagen aquí
+image = cv2.imread(image_path)
+
+# Obtener las coordenadas de las bounding boxes
+boxes = extract_bounding_boxes(image_path, model)
+save_bounding_boxes_as_images(image, boxes, "save_detections")
+
+classify_image_with_yolo("save_detections/strawberry_1.png", YOLO("runs/classify/train/weights/best.pt"))
