@@ -2,7 +2,7 @@ import os
 import cv2
 from ultralytics import YOLO
 
-def load_model(model_path=os.path.join(os.getcwd(), "runs/detect/train/weights/best.pt")):
+def load_detect_model(model_path = os.path.join(os.getcwd(), "runs/detect/train/weights/best.pt")):
     model = YOLO(model_path)
     return model
 

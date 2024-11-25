@@ -1,7 +1,7 @@
-from modules.detection import load_model
+from modules.classification import load_classify_model
+from modules.detection import load_detect_model
 import cv2
 import os
-from ultralytics import YOLO
 
 def extract_bounding_boxes(image_path, model):
     # Obtener las detecciones
@@ -49,14 +49,15 @@ def classify_image_with_yolo(image_path, model):
     return results[0].probs.top1
 
 # Cargar el modelo
-model = load_model()  # Modelo YOLO cargado
+model_detect = load_detect_model()
+model_classify = load_classify_model()
 
 # Ruta de la imagen a procesar
 image_path = "img/input/R.png"  # Especifica tu imagen aquí
 image = cv2.imread(image_path)
 
 # Obtener las coordenadas de las bounding boxes
-boxes = extract_bounding_boxes(image_path, model)
+boxes = extract_bounding_boxes(image_path, model_detect)
 save_bounding_boxes_as_images(image, boxes, "save_detections")
 
-classify_image_with_yolo("save_detections/strawberry_1.png", YOLO("runs/classify/train/weights/best.pt"))
+classify_image_with_yolo("save_detections/strawberry_1.png", model_classify)
